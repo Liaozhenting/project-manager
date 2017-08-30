@@ -3,15 +3,18 @@ const Tables = require(path.join(__dirname, '../tools/sql-orm'))
 const Issues = Tables.issues
 const Projects = Tables.projects
 
-class ProjectCotroller {
+class IssueCotroller {
   constructor() {
-
+    
   }
 
-  async listProjects(req, res, next) {
+  async listIssues(req, res, next) {
     try {
-      let mydata = await Projects.findAll({
-        attributes: ['project_name', 'project_issue_sum', 'project_issue_close', 'project_issue_open']
+      let mydata = await Issues.findAll({
+        attributes: ['issue_statu', 'issue_cotent', 'issue_time', 'issue_type','issue_degree'],
+        where:{
+          project_id:project_id
+        }
       })
       res.send({ code: 200, data: mydata })
     } catch (e) {
@@ -20,10 +23,10 @@ class ProjectCotroller {
     }
   }
 
-  async addOneProject(req, res, next) {
+  async addOneIssue(req, res, next) {
     let data = req.body
     try {
-      let mydata = await Projects.create(data)
+      let mydata = await Issues.create(data)
       res.send({ code: 201, msg: 'success' })
     } catch (e) {
       res.send({ code: 422, err: e })
@@ -31,11 +34,11 @@ class ProjectCotroller {
     }
   }
 
-  async updateOneProject(req, res, next) {
-    const project_id = req.params.project_id;
+  async updateOneIssue(req, res, next) {
+    const issue_id = req.params.issue_id;
     let data = req.body
     try {
-      let mydata = await Projects.update(
+      let mydata = await Issues.update(
         data, {
           where: {
             project_id: project_id
@@ -49,9 +52,9 @@ class ProjectCotroller {
     }
   }
 
-  async deleteOneProject(req, res, next) {
+  async deleteOneIssue(req, res, next) {
     try {
-      let mydata = await Projects.destroy({
+      let mydata = await Issues.destroy({
         where: {
           project_id: project_id
         }
@@ -64,4 +67,4 @@ class ProjectCotroller {
   }
 }
 
-module.exports = new ProjectCotroller()
+module.exports = new IssueCotroller()

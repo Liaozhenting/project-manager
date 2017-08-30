@@ -13,17 +13,16 @@ let sequelize = new Sequelize("issue", "root", "root", {
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connection has been established successfully.");
+    console.log("Connection to MySQL has been established successfully.");
   })
   .catch(err => {
     console.error("Unable to connect to the database:", err);
   });
 
-let project = sequelize.define("project", {
+let projects = sequelize.define("projects", {
   project_id: {
     type: Sequelize.INTEGER,
-    primaryKey: true,
-    allowNull: false
+    primaryKey: true
   },
   project_name: {
     type: Sequelize.STRING,
@@ -31,21 +30,22 @@ let project = sequelize.define("project", {
   },
   project_issue_sum: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   project_issue_close: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   project_issue_open: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: true
   }
 }, {
     timestamps: false           // this will deactivate the timestamp columns
-  });
+  }
+);
 
-let issue = sequelize.define("issue", {
+let issues = sequelize.define("issues", {
   issue_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -63,25 +63,26 @@ let issue = sequelize.define("issue", {
     type: Sequelize.TEXT,
     allowNull: true
   },
-  issue_time:{
+  issue_time: {
     type: Sequelize.DATE,
     allowNull: true
   },
-  issue_type:{
+  issue_type: {
     type: Sequelize.INTEGER,
     allowNull: true
   },
-  issue_degree:{
+  issue_degree: {
     type: Sequelize.INTEGER,
     allowNull: true
   }
 }, {
     timestamps: false
-  });
+  }
+);
 
 let myTable = {
-  project: project,
-  issue: issue
+  projects: projects,
+  issues: issues
 };
 
 module.exports = myTable;    
