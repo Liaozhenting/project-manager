@@ -11,27 +11,29 @@ class ProjectCotroller {
   async listProjects(req, res, next) {
     try {
       let mydata = await Projects.findAll({
-        attributes: ['project_name', 'project_issue_sum', 'project_issue_close', 'project_issue_open']
+        attributes: ['project_id','project_name', 'project_issue_sum', 'project_issue_close', 'project_issue_open']
       })
       res.send({ code: 200, data: mydata })
     } catch (e) {
-      res.send({ code: 406, err: e })
+      res.send({ code: 406, msg: e })
       console.log(e)
     }
   }
 
   async addOneProject(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "localhost:8080");
     let data = req.body
     try {
       let mydata = await Projects.create(data)
       res.send({ code: 201, msg: 'success' })
     } catch (e) {
-      res.send({ code: 422, err: e })
+      res.send({ code: 422, msg: e })
       console.log(e)
     }
   }
 
   async updateOneProject(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "localhost:8080");
     const project_id = req.params.project_id;
     let data = req.body
     try {
@@ -44,12 +46,14 @@ class ProjectCotroller {
       )
       res.send({ code: 201, msg: 'success' })
     } catch (e) {
-      res.send({ code: 422, err: e })
+      res.send({ code: 422, msg: e })
       console.log(e)
     }
   }
 
   async deleteOneProject(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "localhost:8080");
+    const project_id = req.params.project_id;
     try {
       let mydata = await Projects.destroy({
         where: {
@@ -58,7 +62,7 @@ class ProjectCotroller {
       })
       res.send({ code: 201, data: mydata })
     } catch (e) {
-      res.send({ code: 404, err: e })
+      res.send({ code: 404, msg: e })
       console.log(e)
     }
   }

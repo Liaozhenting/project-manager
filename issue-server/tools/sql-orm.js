@@ -49,7 +49,6 @@ let issues = sequelize.define("issues", {
   issue_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: false
   },
   project_id: {
     type: Sequelize.INTEGER,
