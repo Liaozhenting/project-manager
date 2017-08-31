@@ -1,31 +1,38 @@
 const path = require('path');
 const Tables = require(path.join(__dirname, '../tools/sql-orm'))
 const Issues = Tables.issues
+const IssueItem = Tables.issue_items
 const Projects = Tables.projects
 
-class ProjectCotroller {
+class IssueItemCotroller {
   constructor() {
 
   }
 
-  async listProjects(req, res, next) {
+  async listIssueItem(req, res, next) {
+    const issue_id = req.params.issue_id;
     try {
-      let mydata = await Projects.findAll({
-        attributes: ['project_id', 'project_name', 'project_issue_sum', 'project_issue_close', 'project_issue_open'],
-        order: [['project_id', 'DESC']]
+      let mydata = await IssueItem.findAll({
+        attributes: ['issue_item_id', 'issue_id', 'issue_item_content', 'issue_item_time'],
+        where: {
+          issue_id: issue_id
+        },
+        order: [['issue_id', 'DESC']]
       })
-      res.send({ code: 200, data: mydata, msg: 'success' })
+      res.send({ code: 200, data: mydata })
     } catch (e) {
       res.send({ code: 406, msg: e })
       console.log(e)
     }
   }
 
-  async addOneProject(req, res, next) {
+  async addOneIssueItem(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    const issue_id = req.params.issue_id;
     let data = req.body
+    data.issue_id = issue_id
     try {
-      let mydata = await Projects.create(data)
+      let mydata = await IssueItem.create(data)
       res.send({ code: 201, msg: 'success' })
     } catch (e) {
       res.send({ code: 422, msg: e })
@@ -33,15 +40,15 @@ class ProjectCotroller {
     }
   }
 
-  async updateOneProject(req, res, next) {
+  async updateOneIssueItem(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    const project_id = req.params.project_id;
+    const issue_item_id = req.params.issue_item_id;
     let data = req.body
     try {
-      let mydata = await Projects.update(
+      let mydata = await IssueItem.update(
         data, {
           where: {
-            project_id: project_id
+            issue_item_id: issue_item_id
           }
         }
       )
@@ -52,13 +59,13 @@ class ProjectCotroller {
     }
   }
 
-  async deleteOneProject(req, res, next) {
+  async deleteOneIssueItem(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    const project_id = req.params.project_id;
+    const issue_item_id = req.params.issue_item_id;
     try {
-      let mydata = await Projects.destroy({
+      let mydata = await IssueItem.destroy({
         where: {
-          project_id: project_id
+          issue_item_id: issue_item_id
         }
       })
       res.send({ code: 201, msg: 'success' })
@@ -69,4 +76,4 @@ class ProjectCotroller {
   }
 }
 
-module.exports = new ProjectCotroller()
+module.exports = new IssueItemCotroller()

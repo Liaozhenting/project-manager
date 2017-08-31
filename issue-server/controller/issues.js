@@ -5,19 +5,20 @@ const Projects = Tables.projects
 
 class IssueCotroller {
   constructor() {
-    
+
   }
 
   async listIssues(req, res, next) {
     const project_id = req.params.project_id;
     try {
       let mydata = await Issues.findAll({
-        attributes: ['issue_id','issue_statu', 'issue_cotent', 'issue_time', 'issue_type','issue_degree'],
-        where:{
-          project_id:project_id
-        }
+        attributes: ['issue_id', 'issue_statu', 'issue_cotent', 'issue_time', 'issue_type', 'issue_degree'],
+        where: {
+          project_id: project_id
+        },
+        order: [['issue_id', 'DESC']]
       })
-      res.send({ code: 200, data: mydata })
+      res.send({ code: 200, data: mydata, msg: 'success' })
     } catch (e) {
       res.send({ code: 406, msg: e })
       console.log(e)
@@ -25,7 +26,7 @@ class IssueCotroller {
   }
 
   async addOneIssue(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "localhost:8080");
+    res.header("Access-Control-Allow-Origin", "*");
     const project_id = req.params.project_id;
     let data = req.body
     data.project_id = project_id
@@ -39,7 +40,7 @@ class IssueCotroller {
   }
 
   async updateOneIssue(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "localhost:8080");
+    res.header("Access-Control-Allow-Origin", "*");
     const issue_id = req.params.issue_id;
     let data = req.body
     try {
@@ -58,7 +59,7 @@ class IssueCotroller {
   }
 
   async deleteOneIssue(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "localhost:8080");
+    res.header("Access-Control-Allow-Origin", "*");
     const issue_id = req.params.issue_id;
     try {
       let mydata = await Issues.destroy({
@@ -66,7 +67,7 @@ class IssueCotroller {
           issue_id: issue_id
         }
       })
-      res.send({ code: 201, data: mydata })
+      res.send({ code: 201, msg: 'success' })
     } catch (e) {
       res.send({ code: 404, msg: e })
       console.log(e)

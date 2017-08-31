@@ -3,11 +3,11 @@ import VueRouter from 'vue-router';
 
 //引用了两个页面，配置了相应的router
 import index from '../components/index.vue'
-import h from '../components/Hello.vue'
+import projects from '../components/projects.vue'
+import issues from '../components/issues.vue'
 
 
 Vue.use(VueRouter)
-
 
 const routes = [  
   {
@@ -18,8 +18,15 @@ const routes = [
     }
   },
   {
-    path: '/h',
-    component:h ,
+    path: '/projects',
+    component:projects ,
+    meta: {
+      title:'home'
+    }
+  },
+  {
+    path: '/issues',
+    component:issues ,
     meta: {
       title:'home'
     }
