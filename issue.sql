@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-08-31 17:39:22
+Date: 2017-09-01 00:25:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `issues` (
   `issue_degree` int(1) DEFAULT '1' COMMENT '0:紧急，1：普通，2：无关紧要',
   `issue_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`issue_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of issues
@@ -41,7 +41,6 @@ INSERT INTO `issues` VALUES ('4', '2', '阿斯蒂芬', '0', '阿萨德', '0', '1
 INSERT INTO `issues` VALUES ('5', '2', '阿斯蒂芬', '0', '按时', '0', '1', '2017-08-31 11:20:26');
 INSERT INTO `issues` VALUES ('6', '2', '阿斯蒂芬', '0', '按时', '0', '1', '2017-08-31 11:20:54');
 INSERT INTO `issues` VALUES ('7', '2', '阿斯蒂芬按时', '0', '按时按时', '0', '1', '2017-08-31 11:21:03');
-INSERT INTO `issues` VALUES ('8', '4', '阿斯蒂芬按时', '0', '按时按时', '0', '1', '2017-08-31 11:21:36');
 INSERT INTO `issues` VALUES ('9', '4', '按时 ', '0', '12 阿萨德', '0', '1', '2017-08-31 11:22:38');
 INSERT INTO `issues` VALUES ('10', '4', '阿斯蒂芬', '0', '阿萨德', '0', '1', '2017-08-31 11:26:56');
 INSERT INTO `issues` VALUES ('11', '4', '阿斯蒂芬', '0', '阿萨德', '0', '1', '2017-08-31 11:27:07');
@@ -49,7 +48,6 @@ INSERT INTO `issues` VALUES ('12', '4', '阿斯蒂芬', '0', '阿萨德', '0', '
 INSERT INTO `issues` VALUES ('13', '4', '阿斯蒂芬', '0', '阿萨德', '0', '1', '2017-08-31 11:27:09');
 INSERT INTO `issues` VALUES ('14', '3', 'asdf', '0', 'asd ', '0', '1', '2017-08-31 11:58:26');
 INSERT INTO `issues` VALUES ('15', '3', 'asdf', '0', 'asdfsadf', '0', '1', '2017-08-31 11:59:54');
-INSERT INTO `issues` VALUES ('16', '2', 'test', '0', 'asdfsad ', '0', '1', '2017-08-31 14:52:06');
 
 -- ----------------------------
 -- Table structure for issue_items
@@ -79,16 +77,14 @@ CREATE TABLE `projects` (
   `project_issue_sum` int(10) DEFAULT '0',
   `project_issue_close` int(10) DEFAULT '0',
   `project_issue_open` int(10) DEFAULT '0',
+  `project_description` text,
   PRIMARY KEY (`project_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of projects
 -- ----------------------------
-INSERT INTO `projects` VALUES ('2', '566', '0', '0', '0');
-INSERT INTO `projects` VALUES ('3', 'test', '0', '0', '0');
-INSERT INTO `projects` VALUES ('4', 'test', '0', '0', '0');
-INSERT INTO `projects` VALUES ('5', 'test', '0', '0', '0');
-INSERT INTO `projects` VALUES ('6', 'test', '0', '0', '0');
-INSERT INTO `projects` VALUES ('7', 'asdf', '0', '0', '0');
-INSERT INTO `projects` VALUES ('8', 'test', '0', '0', '0');
+INSERT INTO `projects` VALUES ('2', '566', '0', '0', '0', null);
+INSERT INTO `projects` VALUES ('3', 'test', '0', '0', '0', null);
+INSERT INTO `projects` VALUES ('4', 'test', '0', '0', '0', null);
+INSERT INTO `projects` VALUES ('6', 'test', '0', '0', '0', null);

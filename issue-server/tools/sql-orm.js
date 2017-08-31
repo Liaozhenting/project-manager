@@ -30,6 +30,10 @@ let projects = sequelize.define("projects", {
     type: Sequelize.STRING,
     allowNull: false
   },
+  project_description: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
   project_issue_sum: {
     type: Sequelize.INTEGER,
     allowNull: true

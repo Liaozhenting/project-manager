@@ -25,7 +25,7 @@ const routes = [
     }
   },
   {
-    path: '/issues',
+    path: '/issues/:project_id',
     component:issues ,
     meta: {
       title:'home'

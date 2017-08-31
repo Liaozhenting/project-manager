@@ -1,10 +1,11 @@
 <template>
   <div class="banxin">
     <h1>project</h1>
-    <span>0 close</span>
     <span>0 open</span>
+    <span>0 close</span>
     <div class="edit-bar">
       <el-button type="success" @click="isShowAddIssue=true">new issue</el-button>
+      <el-button type="danger" @click="deleteThisProject" style="float:right;">删除该项目</el-button>
     </div>
 
     <ul class="issue-box">
@@ -16,7 +17,7 @@
           close
         </span>
         <span class="el-icon-information" style=""></span>
-        <a v-bind:href="'#/issues/?'+item.issue_id">
+        <a v-bind:href="'#/issues/'+matchProject()+'?'+item.issue_id">
           <span class="issue-link" style="">
             {{item.issue_cotent}}
           </span>
@@ -111,6 +112,42 @@ export default {
             message: "网络错误"
           });
         });
+    },
+    deleteThisProject: function() {
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        this.$http.delete("http://localhost:3000/" + this.matchProject(), {
+
+        })
+          //成功的回调
+          .then((response) => {
+            //items变量保存起来
+            if (response.data.code === 201) {
+              this.$message({
+                type: "success",
+                message: response.data.msg
+              });
+              this.isShowAddIssue = false
+              this.$router.push('/');
+
+            } else {
+              this.$message({
+                type: "error",
+                message: response.data.msg
+              });
+            }
+          }, (err) => {
+            console.log(err);
+            this.$message({
+              type: "error",
+              message: "网络错误"
+            });
+          });
+      })
+
     }
   }
 }
@@ -123,10 +160,12 @@ export default {
 .edit-bar {
   margin-top: 10px;
 }
-.date{
-  font-size:14px;
-  float:right;
+
+.date {
+  font-size: 14px;
+  float: right;
 }
+
 .issue-box {
   margin-top: 25px;
   border: 1px solid #e4e4e4;

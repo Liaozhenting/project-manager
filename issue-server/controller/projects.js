@@ -11,7 +11,7 @@ class ProjectCotroller {
   async listProjects(req, res, next) {
     try {
       let mydata = await Projects.findAll({
-        attributes: ['project_id', 'project_name', 'project_issue_sum', 'project_issue_close', 'project_issue_open'],
+        attributes: ['project_id', 'project_name','project_description', 'project_issue_sum', 'project_issue_close', 'project_issue_open'],
         order: [['project_id', 'DESC']]
       })
       res.send({ code: 200, data: mydata, msg: 'success' })
