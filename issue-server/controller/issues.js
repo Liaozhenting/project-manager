@@ -12,7 +12,7 @@ class IssueCotroller {
     const project_id = req.params.project_id;
     try {
       let mydata = await Issues.findAll({
-        attributes: ['issue_id', 'issue_statu', 'issue_cotent', 'issue_time', 'issue_type', 'issue_degree'],
+        attributes: ['issue_id', 'issue_title','issue_statu', 'issue_cotent', 'issue_time', 'issue_type', 'issue_degree'],
         where: {
           project_id: project_id
         },

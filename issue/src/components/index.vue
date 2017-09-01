@@ -75,10 +75,6 @@ export default {
         .then((response) => {
           //items变量保存起来
           if (response.data.code === 201) {
-            this.$message({
-              type: "success",
-              message: response.data.msg
-            });
             this.isShowAddProject = false
             this.load()
 

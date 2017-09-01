@@ -19,7 +19,7 @@
         <span class="el-icon-information" style=""></span>
         <a v-bind:href="'#/issues/'+matchProject()+'?'+item.issue_id">
           <span class="issue-link" style="">
-            {{item.issue_cotent}}
+            {{item.issue_title}}
           </span>
         </a>
         <span class="date">{{moment(item.issue_time).format('YYYY-MM-DD HH:mm:ss')}}</span>
@@ -87,31 +87,25 @@ export default {
         issue_cotent: this.addIssueContent,
         // issue_type:this.addIssueType,
         // issue_degree:this.addIssueDegree
-      })
-        //成功的回调
-        .then((response) => {
-          //items变量保存起来
-          if (response.data.code === 201) {
-            this.$message({
-              type: "success",
-              message: response.data.msg
-            });
-            this.isShowAddIssue = false
-            this.load()
+      }).then((response) => {
+        //items变量保存起来
+        if (response.data.code === 201) {
+          this.isShowAddIssue = false
+          this.load()
 
-          } else {
-            this.$message({
-              type: "error",
-              message: response.data.msg
-            });
-          }
-        }, (err) => {
-          console.log(err);
+        } else {
           this.$message({
             type: "error",
-            message: "网络错误"
+            message: response.data.msg
           });
+        }
+      }, (err) => {
+        console.log(err);
+        this.$message({
+          type: "error",
+          message: "网络错误"
         });
+      });
     },
     deleteThisProject: function() {
       this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
@@ -126,10 +120,6 @@ export default {
           .then((response) => {
             //items变量保存起来
             if (response.data.code === 201) {
-              this.$message({
-                type: "success",
-                message: response.data.msg
-              });
               this.isShowAddIssue = false
               this.$router.push('/');
 
