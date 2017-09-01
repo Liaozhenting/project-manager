@@ -16,7 +16,7 @@
     </ul>
 
     <el-dialog title="new project" v-model="isShowAddProject" size="small" :close-on-click-modal="false">
-      <el-input type="textarea" :rows="3" placeholder="名字" v-model="addProjectTitle">
+      <el-input type="textarea" :rows="3" placeholder="项目名字" v-model="addProjectTitle">
       </el-input>
       <el-input type="textarea" :rows="10" placeholder="请输入内容" v-model="addProjectContent">
       </el-input>
@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     load: function() {
+      setTitle('Your name');
       this.$http.get("http://localhost:3000/", {
       })
         //成功的回调
@@ -57,7 +58,7 @@ export default {
             });
           }
         }, (err) => {
-          console.log(err);
+          
           this.$message({
             type: "error",
             message: "网络错误"
@@ -85,7 +86,7 @@ export default {
             });
           }
         }, (err) => {
-          console.log(err);
+          
           this.$message({
             type: "error",
             message: "网络错误"

@@ -12,7 +12,7 @@ class IssueCotroller {
     const project_id = req.params.project_id;
     try {
       let mydata = await Issues.findAll({
-        attributes: ['issue_id', 'issue_title','issue_statu', 'issue_cotent', 'issue_time', 'issue_type', 'issue_degree'],
+        attributes: ['issue_id', 'issue_title','issue_statu', 'issue_content', 'issue_time', 'issue_type', 'issue_degree'],
         where: {
           project_id: project_id
         },
@@ -70,6 +70,22 @@ class IssueCotroller {
       res.send({ code: 201, msg: 'success' })
     } catch (e) {
       res.send({ code: 404, msg: e })
+      console.log(e)
+    }
+  }
+
+  async listOneIssue(req, res, next) {
+    const issue_id = req.params.issue_id
+    try {
+      let mydata = await Issues.find({
+        attributes: ['issue_id', 'issue_title','issue_statu', 'issue_content', 'issue_time', 'issue_type', 'issue_degree'],
+        where: {
+          issue_id:issue_id
+        }
+      })
+      res.send({ code: 200, data: mydata, msg: 'success' })
+    } catch (e) {
+      res.send({ code: 406, msg: e })
       console.log(e)
     }
   }

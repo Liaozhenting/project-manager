@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-09-01 17:42:32
+Date: 2017-09-01 23:06:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,12 +24,12 @@ CREATE TABLE `issues` (
   `project_id` int(10) NOT NULL,
   `issue_title` varchar(500) NOT NULL,
   `issue_statu` int(1) DEFAULT '0' COMMENT '0;open,1:close',
-  `issue_cotent` text,
+  `issue_content` text,
   `issue_type` int(1) DEFAULT '0' COMMENT '0:bug,1:建议',
   `issue_degree` int(1) DEFAULT '1' COMMENT '0:紧急，1：普通，2：无关紧要',
   `issue_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`issue_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of issues
@@ -50,6 +50,7 @@ INSERT INTO `issues` VALUES ('14', '3', 'asdf', '0', 'asd ', '0', '1', '2017-08-
 INSERT INTO `issues` VALUES ('15', '3', 'asdf', '0', 'asdfsadf', '0', '1', '2017-08-31 11:59:54');
 INSERT INTO `issues` VALUES ('18', '11', 'req.hostname', '0', '这样写不好，因为IP和域名多个的原因，最好固定死', '0', '1', '2017-09-01 09:30:55');
 INSERT INTO `issues` VALUES ('19', '12', '数据库的表设计有问题。要学习树形表的设计', '0', '', '0', '1', '2017-09-01 09:36:12');
+INSERT INTO `issues` VALUES ('21', '12', '富文本编辑器', '0', '现在的写代码不方便', '0', '1', '2017-09-01 23:04:35');
 
 -- ----------------------------
 -- Table structure for issue_items
@@ -61,15 +62,17 @@ CREATE TABLE `issue_items` (
   `issue_item_content` text,
   `issue_item_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`issue_item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of issue_items
 -- ----------------------------
 INSERT INTO `issue_items` VALUES ('2', '1', 'asdfsadfsadf', '2017-08-31 17:08:17');
 INSERT INTO `issue_items` VALUES ('3', '2', 'asdfsadfsadf', '2017-08-31 17:08:35');
-INSERT INTO `issue_items` VALUES ('4', '18', '可以早点开始ASDASDFASDFASDFASDFASDFSADFASDFASDFASDFSADFSADFSADFASDFSDAFSADDFASDF\nASDFSADFASDfuckfuckfuck\n<pre>阿斯蒂芬撒的阿萨德\n    text\n</pre>\n\n\n\nASF223234234', '2017-09-01 14:59:10');
+INSERT INTO `issue_items` VALUES ('4', '18', '可以早点开始ASDASDFASDFASDFASDFASDFSADFASDFASDFASDFSADFSADFSADFASDFSDAFSADDFASDF阿士大夫撒地方打阿士大夫撒地方阿萨德sad按时\nASDFSADFASDfuckfuckfuck\n<pre>阿斯蒂芬撒的阿萨德\n    text\n</pre>\n\n\n\nASF223234234', '2017-09-01 14:59:10');
 INSERT INTO `issue_items` VALUES ('6', '18', 'asdfsadf\n阿斯顿发撒旦', '2017-09-01 14:37:00');
+INSERT INTO `issue_items` VALUES ('9', '19', '是嘛努力啊可以的', '2017-09-01 23:00:07');
+INSERT INTO `issue_items` VALUES ('10', '21', '确实，我会抓紧时间的。啊啊啊的', '2017-09-01 23:04:48');
 
 -- ----------------------------
 -- Table structure for projects

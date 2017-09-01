@@ -9,11 +9,13 @@ router.get('/', projects.listProjects);
 router.post('/', projects.addOneProject);
 router.patch('/:project_id', projects.updateOneProject);
 router.delete('/:project_id', projects.deleteOneProject);
+router.get('/oneProject/:project_id', projects.listOneProject);
 
 router.get('/:project_id', issues.listIssues)
 router.post('/:project_id', issues.addOneIssue);
 router.patch('/project/:issue_id', issues.updateOneIssue);
 router.delete('/project/:issue_id', issues.deleteOneIssue);
+router.get('/oneIssue/:issue_id', issues.listOneIssue);
 
 router.get('/issues/:issue_id', issueItem.listIssueItem)
 router.post('/issues/:issue_id', issueItem.addOneIssueItem);

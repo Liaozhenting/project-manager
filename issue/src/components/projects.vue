@@ -1,8 +1,9 @@
 <template>
   <div class="banxin">
-    <h1>project</h1>
-    <span>0 open</span>
-    <span>0 close</span>
+    <h1>{{data_oneProject.project_name}}</h1>
+    <p>{{data_oneProject.project_description}}</p>
+    <span class="issue-statu">{{data_oneProject.project_issue_open}} open</span>
+    <span class="issue-statu">{{data_oneProject.project_issue_close}} close</span>
     <div class="edit-bar">
       <el-button type="success" @click="isShowAddIssue=true">new issue</el-button>
       <el-button type="danger" @click="deleteThisProject" style="float:right;">删除该项目</el-button>
@@ -43,10 +44,12 @@
 export default {
   mounted() {
     this.load()
+    
   },
   data() {
     return {
       data_project: [],
+      data_oneProject:{},
       isShowAddIssue: false,
       addIssueTitle: '',
       addIssueContent: '',
@@ -57,25 +60,39 @@ export default {
   methods: {
     load: function() {
       this.$http.get("http://localhost:3000/" + this.matchProject(), {
-      })
-        //成功的回调
-        .then((response) => {
-          //items变量保存起来
-          if (response.data.code === 200) {
-            this.data_project = response.data.data;
-          } else {
-            this.$message({
-              type: "error",
-              message: response.data.code
-            });
-          }
-        }, (err) => {
-          console.log(err);
+      }).then((response) => {
+        if (response.data.code === 200) {
+          this.data_project = response.data.data;
+        } else {
           this.$message({
             type: "error",
-            message: "网络错误"
+            message: response.data.code
           });
+        }
+      }, (err) => {
+        this.$message({
+          type: "error",
+          message: "网络错误"
         });
+      });
+      this.$http.get("http://localhost:3000/oneProject/" + this.matchProject(), {
+      }).then((response) => {
+        if (response.data.code === 200) {
+          this.data_oneProject = response.data.data;
+          setTitle(this.data_oneProject.project_name)
+        } else {
+          this.$message({
+            type: "error",
+            message: response.data.code
+          });
+        }
+      }, (err) => {
+
+        this.$message({
+          type: "error",
+          message: "网络错误"
+        });
+      });
     },
     matchProject: function() {
       var num = /\?(\d+)/.exec(window.location.hash)[1]
@@ -84,7 +101,7 @@ export default {
     addIssue: function() {
       this.$http.post("http://localhost:3000/" + this.matchProject(), {
         issue_title: this.addIssueTitle,
-        issue_cotent: this.addIssueContent,
+        issue_content: this.addIssueContent,
         // issue_type:this.addIssueType,
         // issue_degree:this.addIssueDegree
       }).then((response) => {
@@ -100,7 +117,7 @@ export default {
           });
         }
       }, (err) => {
-        console.log(err);
+
         this.$message({
           type: "error",
           message: "网络错误"
@@ -130,7 +147,7 @@ export default {
               });
             }
           }, (err) => {
-            console.log(err);
+
             this.$message({
               type: "error",
               message: "网络错误"
@@ -155,7 +172,10 @@ export default {
   font-size: 14px;
   float: right;
 }
-
+.issue-statu{
+  background: #e4e4e4;
+  cursor: pointer;
+}
 .issue-box {
   margin-top: 25px;
   border: 1px solid #e4e4e4;

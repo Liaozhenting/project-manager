@@ -1,14 +1,17 @@
 <template>
   <div class="banxin">
-    <h1>issue title</h1>
-    <p>issue 内容</p>
+    <h1>{{data_oneIssue.issue_title}}</h1>
+    <span class="date">{{moment(data_oneIssue.issue_time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+    <div class="item-content">{{data_oneIssue.issue_content}}</div>
     <el-button type="danger" @click="deleteThisIssue" style="float:right;">删除该Issue</el-button>
+    <br/>
     <ul class="issue-box">
       <li v-for="(item,index) in data_issue" class="issue-list ">
         <span class="date">{{moment(item.issue_item_time).format('YYYY-MM-DD HH:mm:ss')}}</span>
         <div v-if="index!==editNum">
           <div class="item-content">{{item.issue_item_content}}</div>
-          <i class="el-icon-edit edit-item-button" @click="showUpdateItem(item.issue_item_content,index)"></i>&nbsp;<i class="el-icon-delete" @click="deleteIssueItem(item.issue_item_id)"></i>
+          <i class="el-icon-edit edit-item-button" @click="showUpdateItem(item.issue_item_content,index)"></i>&nbsp;
+          <i class="el-icon-delete" @click="deleteIssueItem(item.issue_item_id)"></i>
         </div>
         <div v-else>
           <el-input class="textarea" type="textarea" v-model="updateIssueItemContent">
@@ -37,6 +40,7 @@ export default {
   data() {
     return {
       data_issue: [],
+      data_oneIssue: {},
       projectId: '',
       editNum: -1,
       updateIssueItemContent: '',
@@ -46,30 +50,43 @@ export default {
   methods: {
     load: function() {
       this.$http.get("http://localhost:3000/issues/" + this.matchProject(), {
-      })
-        //成功的回调
-        .then((response) => {
-          //items变量保存起来
-          if (response.data.code === 200) {
-            var that = this
-            this.data_issue = response.data.data
-            // this.data_issue.forEach(function(ele,index){
-            //   ele.issue_item_time = that.moment(ele.issue_item_time).format('YYYY-MM-DD HH:mm:ss')
-            // })
-            console.log(this.data_issue)
-          } else {
-            this.$message({
-              type: "error",
-              message: response.data.code
-            });
-          }
-        }, (err) => {
-          console.log(err);
+      }).then((response) => {
+        //items变量保存起来
+        if (response.data.code === 200) {
+          var that = this
+          this.data_issue = response.data.data
+
+        } else {
           this.$message({
             type: "error",
-            message: "网络错误"
+            message: response.data.code
           });
+        }
+      }, (err) => {
+
+        this.$message({
+          type: "error",
+          message: "网络错误"
         });
+      });
+      this.$http.get("http://localhost:3000/oneIssue/" + this.matchProject(), {
+      }).then((response) => {
+        if (response.data.code === 200) {
+          this.data_oneIssue = response.data.data;
+          setTitle(this.data_oneIssue.issue_title)
+        } else {
+          this.$message({
+            type: "error",
+            message: response.data.code
+          });
+        }
+      }, (err) => {
+
+        this.$message({
+          type: "error",
+          message: "网络错误"
+        });
+      });
     },
     matchProject: function() {
       var num = /\?(\d+)/.exec(window.location.hash)[1]
@@ -99,7 +116,7 @@ export default {
             });
           }
         }, (err) => {
-          console.log(err);
+
           this.$message({
             type: "error",
             message: "网络错误"
@@ -123,7 +140,7 @@ export default {
           });
         }
       }, (err) => {
-        console.log(err);
+
         this.$message({
           type: "error",
           message: "网络错误"
@@ -149,7 +166,7 @@ export default {
           });
         }
       }, (err) => {
-        console.log(err);
+
         this.$message({
           type: "error",
           message: "网络错误"
@@ -174,7 +191,7 @@ export default {
             });
           }
         }, (err) => {
-          console.log(err);
+
           this.$message({
             type: "error",
             message: "网络错误"
@@ -193,9 +210,11 @@ export default {
   margin-top: 25px;
   /* border: 1px solid #e4e4e4; */
 }
-i:hover{
-  color:#20a0ff;
+
+i:hover {
+  color: #20a0ff;
 }
+
 .issue-list {
   padding: 14px;
 
@@ -203,7 +222,7 @@ i:hover{
 }
 
 .item-content {
-  width: 80%;
+  /* width: 80%; */
   /* margin-top:20px; */
   margin-bottom: 20px;
   padding: 20px;

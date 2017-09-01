@@ -68,7 +68,7 @@ let issues = sequelize.define("issues", {
     type: Sequelize.INTEGER,
     allowNull: true
   },
-  issue_cotent: {
+  issue_content: {
     type: Sequelize.TEXT,
     allowNull: true
   },

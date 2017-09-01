@@ -67,6 +67,22 @@ class ProjectCotroller {
       console.log(e)
     }
   }
+
+  async listOneProject(req, res, next) {
+    const project_id = req.params.project_id
+    try {
+      let mydata = await Projects.find({
+        attributes: ['project_id', 'project_name','project_description', 'project_issue_sum', 'project_issue_close', 'project_issue_open'],
+        where: {
+          project_id:project_id
+        }
+      })
+      res.send({ code: 200, data: mydata, msg: 'success' })
+    } catch (e) {
+      res.send({ code: 406, msg: e })
+      console.log(e)
+    }
+  }
 }
 
 module.exports = new ProjectCotroller()
