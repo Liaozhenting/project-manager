@@ -2,9 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 
 //引用了两个页面，配置了相应的router
-import index from '../components/index.vue'
-import projects from '../components/projects.vue'
-import issues from '../components/issues.vue'
+// const index = resolve => require(["../components/index.vue"], resolve);
+// const projects = resolve => require(["../components/projects.vue"], resolve);
+// const issues = resolve => require(["../components/issues.vue"], resolve);
+const index = () => import("../components/index.vue");
+const projects = () => import("../components/projects.vue");
+const issues = () => import("../components/issues.vue");
 
 
 Vue.use(VueRouter)

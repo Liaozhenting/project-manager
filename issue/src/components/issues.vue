@@ -1,13 +1,13 @@
 <template>
   <div class="banxin">
     <h1>{{data_oneIssue.issue_title}}</h1>
-    <span class="date">{{moment(data_oneIssue.issue_time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+    <span class="date">{{format(data_oneIssue.issue_time,'YYYY-MM-DD HH:mm:ss')}}</span>
     <div class="item-content">{{data_oneIssue.issue_content}}</div>
     <el-button type="danger" @click="deleteThisIssue" style="float:right;">删除该Issue</el-button>
     <br/>
     <ul class="issue-box">
       <li v-for="(item,index) in data_issue" class="issue-list ">
-        <span class="date">{{moment(item.issue_item_time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+        <span class="date">{{format(item.issue_item_time,'YYYY-MM-DD HH:mm:ss')}}</span>
         <div v-if="index!==editNum">
           <div class="item-content">{{item.issue_item_content}}</div>
           <i class="el-icon-edit edit-item-button" @click="showUpdateItem(item.issue_item_content,index)"></i>&nbsp;

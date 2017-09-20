@@ -23,7 +23,7 @@
             {{item.issue_title}}
           </span>
         </a>
-        <span class="date">{{moment(item.issue_time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+        <span class="date">{{format(item.issue_time,'YYYY-MM-DD HH:mm:ss')}}</span>
       </li>
     </ul>
 
