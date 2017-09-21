@@ -1,0 +1,1 @@
+const Tables = require(path.join(__dirname, '../tools/sql-orm'))

@@ -10,9 +10,13 @@ class ProjectCotroller {
 
   async listProjects(req, res, next) {
     try {
+      let user_id = req.query.userID;
       let mydata = await Projects.findAll({
         attributes: ['project_id', 'project_name','project_description', 'project_issue_sum', 'project_issue_close', 'project_issue_open'],
-        order: [['project_id', 'DESC']]
+        order: [['project_id', 'DESC']],
+        where:{
+          user_id:user_id
+        }
       })
       res.send({ code: 200, data: mydata, msg: 'success' })
     } catch (e) {
