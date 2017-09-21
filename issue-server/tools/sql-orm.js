@@ -8,8 +8,8 @@ let sequelize = new Sequelize("issue", "root", "root", {
     min: 0,
     idle: 10000
   },
-  timezone:'+8:00',
-  dateStrings:true
+  timezone: '+8:00',
+  dateStrings: true
 });
 
 sequelize
@@ -20,11 +20,34 @@ sequelize
   .catch(err => {
     console.error("Unable to connect to the database:", err);
   });
+let users = sequelize.define("users", {
+  user_id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    // allowNull: false
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 
+}, {
+    timestamps: false
+  }
+);
 let projects = sequelize.define("projects", {
   project_id: {
     type: Sequelize.INTEGER,
+    // allowNull: false,
     primaryKey: true
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   project_name: {
     type: Sequelize.STRING,
@@ -55,6 +78,10 @@ let issues = sequelize.define("issues", {
   issue_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   project_id: {
     type: Sequelize.INTEGER,
@@ -94,6 +121,10 @@ let issue_items = sequelize.define("issue_items", {
     type: Sequelize.INTEGER,
     primaryKey: true,
   },
+  user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
   issue_id: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -113,9 +144,10 @@ let issue_items = sequelize.define("issue_items", {
 
 
 let myTable = {
+  users:users,
   projects: projects,
   issues: issues,
-  issue_items:issue_items
+  issue_items: issue_items
 };
 
 module.exports = myTable;    
